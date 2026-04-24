@@ -4,8 +4,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const USER_ID = "SherilTMario_29072005";
 const EMAIL_ID = "st4494@srmist.edu.in";
