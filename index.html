@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SRM Full Stack Challenge</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f9;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    textarea {
+      width: 60%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    pre {
+      background: #222;
+      color: #00ffcc;
+      text-align: left;
+      padding: 15px;
+      margin: 20px auto;
+      width: 60%;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>SRM Full Stack Engineering Challenge</h1>
+
+  <textarea id="inputData" rows="6">
+A->B, A->C, B->D, C->E, E->F, X->Y, Y->Z, Z->X
+  </textarea>
+
+  <br><br>
+
+  <button onclick="sendData()">Submit</button>
+
+  <h2>API Response</h2>
+  <pre id="output"></pre>
+
+  <script>
+    async function sendData() {
+      const input = document.getElementById("inputData").value;
+
+      const dataArray = input
+        .split(",")
+        .map(item => item.trim())
+        .filter(item => item.length > 0);
+
+      try {
+        const response = await fetch("http://localhost:3000/bfhl", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ data: dataArray })
+        });
+
+        const result = await response.json();
+        document.getElementById("output").textContent =
+          JSON.stringify(result, null, 2);
+      } catch (error) {
+        document.getElementById("output").textContent =
+          "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
